@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>$Title$</title>
+</head>
+<body>
+<script type="text/javascript">
+  // Object.defineProperty(obj, prop, descriptor)  定义更强大的属性
+
+  const p = {
+    firstName: 'A',
+    lastName: 'B'
+  }
+  /*
+  给p对象添加一个fullName属性, 要求:
+    1. fullName的值的组成: firstName-lastName
+    2. 如果改变firstName/lastName, fullName也要同步改变
+    3. 如果改变fullName, firstName/lastName也要同步改变
+   */
+  /*p.fullName = p.firstName + '-' + p.lastName
+  console.log(p.fullName)  // A-B
+  p.firstName = 'C'
+  p.lastName = 'D'
+  console.log(p.fullName)  // A-B 不可以
+  */
+  Object.defineProperty(p, 'fullName', { // 配置对象 ==>属性描述符
+    // getter
+    // 当读取属性值时返回自动调用, 函数的返回值就是属性值, this是包含属性的对象
+    get () {
+      console.log('get()')
+      // return undefined
+      return this.firstName + '-' + this.lastName
+    },
+    // setter
+    // 当修改了属性值时自动调用, 监视属性值的变化, this是包含属性的对象
+    set (value) { // value是fullName最新的值
+      console.log('set() ', value)  // C-D
+      // 更新firstName/lastName
+      const names = value.split('-')
+      this.firstName = names[0]
+      this.lastName = names[1]
+    }
+  })
+  console.log(p.fullName) // 内部会调用getter
+
+  p.firstName = 'E'
+  p.lastName = 'F'
+  console.log(p.fullName) // E-F
+
+  p.fullName = "C-D"  // 内部会调用setter
+  console.log(p.firstName, p.lastName) // C D
+
+/*
+关于回调函数的2个方面
+1. 如何函数是一个回调函数?
+  a. 你定义
+  b. 你没有直接调用
+  c. 当最终它执行了
+2. 所有回调函数必须知道的3个问题
+  a. 什么时候调用?
+  b. 用来做什么的?
+  c. this是谁?
+ */
+
+/*
+具体的技术
+通用的技术-->使用到具体的技术中
+ */
+
+
+</script>
+</body>
+</html>
