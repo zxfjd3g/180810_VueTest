@@ -24,13 +24,51 @@
 -->
 <!--
 需求: 自定义2个指令
-  1. 功能类型于v-text, 但转换为全大写
-  2. 功能类型于v-text, 但转换为全小写
+  1. 功能类型于v-text, 但转换为全大写   v-upper-text
+  2. 功能类型于v-text, 但转换为全小写  v-lower-text
 -->
+
+<div id="test">
+  <p v-upper-text="msg"></p>
+  <p v-lower-text="msg"></p>
+</div>
+
+<div id="test2">
+  <p v-upper-text="msg"></p>
+  <p v-lower-text="msg"></p>
+</div>
 
 <script type="text/javascript" src="../js/vue.js"></script>
 <script type="text/javascript">
-
+  
+  // 定义全局指令: 可以在任意模板中使用
+  /*
+  el: 指令属性所在标签对象
+  binding: 包含指令相关信息数据的对象
+   */
+  Vue.directive('upper-text', function(el, binding){
+    console.log('upper-text', binding)
+    el.textContent = binding.value.toUpperCase()
+  })
+  
+  new Vue({
+    el: '#test',
+    data: {
+      msg: 'I Will Back'
+    },
+    directives: { // 局部指令, 只能在当前vm管理的模板中使用
+      'lower-text'(el, binding) {
+        console.log('lower-text')
+        el.textContent = binding.value.toLowerCase()
+      }
+    }
+  })
+  new Vue({
+    el: '#test2',
+    data: {
+      msg: 'I Will Back222222'
+    }
+  })
 </script>
 </body>
 </html>

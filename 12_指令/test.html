@@ -17,15 +17,27 @@
   v-bind : 强制绑定解析表达式, 可以省略v-bind
   v-model : 双向数据绑定
   ref : 为某个元素注册一个唯一标识, vue对象通过$els属性访问这个元素对象
-  v-cloak : 使用它防止闪现表达式, 与css配合: [v-cloak] { display: none }
 -->
 <div id="example">
-
+  <p v-text="msg" id="test"></p>
+  <p v-html="msg"></p>
+  <p ref="xxx">xxxx</p>
+  <button @click="hint">提示</button>
 </div>
 
 <script type="text/javascript" src="../js/vue.js"></script>
 <script type="text/javascript">
-
+  new Vue({
+    el : '#example',
+    data : {
+      msg: '<a href="http://www.atguigu.com">尚硅谷</a>'
+    },
+    methods : {
+      hint () {
+        alert(this.$refs.xxx.textContent)
+      }
+    }
+  })
 </script>
 </body>
 </html>
