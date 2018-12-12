@@ -38,14 +38,17 @@
 <script type="text/javascript">
   new Vue({
     el : '#demo',
-    data : {
-      persons: [ // vue监视的是persons本身
-        {name: 'Tom', age: 15},
-        {name: 'Jack', age: 13},
-        {name: 'Bob', age: 14},
-        {name: 'Rose', age: 18},
-        {name: 'Jerry', age: 17}
-      ]
+    data () {
+
+      return {
+        persons: [ // vue监视的是persons本身
+          {name: 'Tom', age: 15},
+          {name: 'Jack', age: 13},
+          {name: 'Bob', age: 14},
+          {name: 'Rose', age: 18},
+          {name: 'Jerry', age: 17}
+        ]
+      }
     },
 
     methods: {

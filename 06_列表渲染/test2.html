@@ -10,9 +10,63 @@
 2. 列表排序
 -->
 
+<div id="demo">
+  <input type="text" v-model="searchName">
+  <ul>
+    <li v-for="(p, index) in filterPersons" :key="index">
+      {{index}}--{{p.name}}--{{p.age}}
+    </li>
+  </ul>
+  <div>
+    <button @click="sortType=1">年龄升序</button>
+    <button @click="sortType=2">年龄降序</button>
+    <button @click="sortType=3">原本顺序</button>
+  </div>
+</div>
+
 <script type="text/javascript" src="../js/vue.js"></script>
 <script type="text/javascript">
+  new Vue({
+    el: '#demo',
+    data () {
+      return {
+        searchName: '',
+        sortType: 1, // 1: 升序, 2: 降序, 3: 不排序
+        persons: [
+          {name: 'Tom', age: 15},
+          {name: 'Jack', age: 13},
+          {name: 'Bob', age: 14},
+          {name: 'Rose', age: 18},
+          {name: 'Jerry', age: 17}
+        ]
+      }
+    },
 
+    computed: {
+      // 得到过滤后的数组
+      filterPersons () {
+        // 1. 取出所有相关的数据
+        const {searchName, persons, sortType} = this
+        // 2. 计算处理, 返回计算的结果
+
+        // 对数组进行过滤
+        const fps = persons.filter((p, index) => p.name.indexOf(searchName)>=0)
+
+        // 对过滤后的数组进行排序
+        if(sortType!==3) {
+          fps.sort(function (p1, p2) {
+            if(sortType===2) { // 降序
+              return p2.age-p1.age
+            } else {// 升序
+              return p1.age-p2.age
+            }
+          })
+        }
+
+        return fps
+      }
+    }
+  })
 </script>
 </body>
 </html>
