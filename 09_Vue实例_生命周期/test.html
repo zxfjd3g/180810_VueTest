@@ -19,15 +19,80 @@
     * beforeDestory()
     * destoryed()
 2. 常用的生命周期方法
-  created()/mounted(): 发送ajax请求, 启动定时器等异步任务
+  mounted(): 发送ajax请求, 启动定时器等异步任务
   beforeDestory(): 做收尾工作, 如: 清除定时器
 -->
 
-<div>
-
+<div id="test">
+  <button @click="destroyVM">干掉vm</button>
+  <p v-show="isShow">atguigu</p>
 </div>
 
 <script type="text/javascript" src="../js/vue.js"></script>
-<script type="text/javascript"></script>
+<script type="text/javascript">
+  new Vue({
+    el : '#test',
+    data : {
+      isShow: true  // 是否显示
+    },
+    methods : {
+      destroyVM () {
+        this.$destroy()
+      }
+    },
+
+    beforeCreate () {
+      console.log('beforeCreate()')
+    },
+    created () {
+      console.log('created()')
+    },
+    beforeMount () {
+      console.log('beforeMount()')
+    },
+    // 初始显示完成之后调用: 启动一个异步任务(发ajax, 启动定时器, 绑定自定义监听)
+    mounted () {
+      console.log('mounted()')
+      // 启动循环定时器===> 启动一个异步任务
+      this.intervalId = setInterval(() => {
+        console.log('-------')
+        this.isShow = !this.isShow
+      }, 1000)
+    },
+
+    beforeUpdate () {
+      console.log('beforeUpdate()')
+    },
+    updated () {
+      console.log('updated()')
+    },
+
+    // 准备销毁之前: 做一些收尾的工作(清除定时器)
+    beforeDestroy () {
+      console.log('beforeDestroy()')
+      // 清除定时器
+      clearInterval(this.intervalId)
+    },
+    destroyed () {
+      console.log('destroyed()')
+    },
+  })
+
+  /*
+  1. create
+    beforeCreate()
+    create()
+  2. mount
+    beforeMount()
+    mounted()
+  3. update
+    beforeUpdate()
+    updated()
+  4. destroy
+    beforeDestroy()
+    destroyed()
+   */
+
+</script>
 </body>
 </html>
