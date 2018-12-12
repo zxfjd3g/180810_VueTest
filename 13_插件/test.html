@@ -6,9 +6,26 @@
 </head>
 <body>
 
-<script type="text/javascript" src="../js/vue.js"></script>
-<script type="text/javascript">
+<div id="test">
+  <p>{{name | upper-format}}</p>
+</div>
 
+<script type="text/javascript" src="../js/vue.js"></script>
+<script type="text/javascript" src="./vue-test.js"></script>
+<script type="text/javascript">
+  // 声明使用插件
+  Vue.use(myPlugin) // 内部会调用插件对象的install()
+
+  Vue.myGlobalMethod()
+
+  const vm = new Vue({
+    el : '#test',
+    data : {
+      name: 'Tom'
+    }
+  })
+
+  vm.$instanceMethod()
 </script>
 </body>
 </html>

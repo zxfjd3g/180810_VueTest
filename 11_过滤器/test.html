@@ -22,11 +22,38 @@
 <!--需求: 对当前时间进行指定格式显示-->
 <div id="test">
   <h2>显示格式化的日期时间</h2>
+  <p>{{startTime}}</p>
+  <p>{{startTime | date-format}}</p>
+  <p>{{startTime | date-format('YYYY-MM-DD')}}</p>
+  <p>{{startTime | date-format('HH:mm:ss')}}</p>
 </div>
 
+<script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.22.2/moment.js"></script>
 <script type="text/javascript" src="../js/vue.js"></script>
 <script>
 
+  // 定义全局过滤器
+  /*Vue.filter('date-format', function (value, formatStr='YYYY-MM-DD HH:mm:ss') {
+    return moment(value).format(formatStr)  // 2018-12-12 14:25:10
+  })*/
+
+  Vue.filter('date-format', function (value, formatStr) {
+    return moment(value).format(formatStr || 'YYYY-MM-DD HH:mm:ss')  // 2018-12-12 14:25:10
+  })
+
+  new Vue({
+    el : '#test',
+    data : {
+      startTime: Date.now() - 10000
+    },
+    methods : {
+
+    },
+
+    computed : {
+
+    }
+  })
 </script>
 </body>
 </html>
